@@ -1,0 +1,264 @@
+Folder PATH listing
+Volume serial number is D635-1FF6
+C:\USERS\DELL\DESKTOP\PENNY-DEBT\CRM-FRONTEND\SRC\PAGES
++---Auth
+|       CustomerLogin.jsx
+|       EmployeeLogin.jsx
+|       Login.jsx
+|       
++---crm
+|   +---Advisor
+|   |       AdvisorDashboard.jsx
+|   |       Clients.jsx
+|   |       Dashboard.jsx
+|   |       Leads.jsx
+|   |       Reports.jsx
+|   |       Settings.jsx
+|   |       Tasks.jsx
+|   |       
+|   +---CEO
+|   |       CEODashboard.jsx
+|   |       Clients.jsx
+|   |       Dashboard.jsx
+|   |       Leads.jsx
+|   |       Reports.jsx
+|   |       Settings.jsx
+|   |       Tasks.jsx
+|   |       
+|   +---Compliance
+|   |       Clients.jsx
+|   |       ComplianceDashboard.jsx
+|   |       Dashboard.jsx
+|   |       Leads.jsx
+|   |       Reports.jsx
+|   |       Settings.jsx
+|   |       Tasks.jsx
+|   |       
+|   +---COO
+|   |       Clients.jsx
+|   |       COODashboard.jsx
+|   |       Dashboard.jsx
+|   |       Leads.jsx
+|   |       Reports.jsx
+|   |       Settings.jsx
+|   |       Tasks.jsx
+|   |       
+|   +---Counsellor
+|   |       Clients.jsx
+|   |       CounsellorDashboard.jsx
+|   |       Dashboard.jsx
+|   |       Leads.jsx
+|   |       Reports.jsx
+|   |       Settings.jsx
+|   |       Tasks.jsx
+|   |       
+|   +---Credit
+|   |       Clients.jsx
+|   |       CreditDashboard.jsx
+|   |       Dashboard.jsx
+|   |       Leads.jsx
+|   |       Reports.jsx
+|   |       Settings.jsx
+|   |       Tasks.jsx
+|   |       
+|   +---CTO
+|   |       Clients.jsx
+|   |       CTODashboard.jsx
+|   |       Dashboard.jsx
+|   |       Leads.jsx
+|   |       Reports.jsx
+|   |       Settings.jsx
+|   |       Tasks.jsx
+|   |       
+|   +---Finance
+|   |       Clients.jsx
+|   |       Dashboard.jsx
+|   |       FinanceDashboard.jsx
+|   |       Leads.jsx
+|   |       Reports.jsx
+|   |       Settings.jsx
+|   |       Tasks.jsx
+|   |       
+|   +---HR
+|   |       Clients.jsx
+|   |       Dashboard.jsx
+|   |       HRDashboard.jsx
+|   |       Leads.jsx
+|   |       Reports.jsx
+|   |       Settings.jsx
+|   |       Tasks.jsx
+|   |       
+|   +---Legal
+|   |       Clients.jsx
+|   |       Dashboard.jsx
+|   |       Leads.jsx
+|   |       LegalDashboard.jsx
+|   |       Reports.jsx
+|   |       Settings.jsx
+|   |       Tasks.jsx
+|   |       
+|   +---Operations
+|   |       Clients.jsx
+|   |       Dashboard.jsx
+|   |       Leads.jsx
+|   |       OperationsDashboard.jsx
+|   |       Reports.jsx
+|   |       Settings.jsx
+|   |       Tasks.jsx
+|   |       
+|   +---Recovery
+|   |       Clients.jsx
+|   |       Dashboard.jsx
+|   |       Leads.jsx
+|   |       RecoveryDashboard.jsx
+|   |       Reports.jsx
+|   |       Settings.jsx
+|   |       Tasks.jsx
+|   |       
+|   +---Shared
+|   |       Clients.jsx
+|   |       Dashboard.jsx
+|   |       Leads.jsx
+|   |       Reports.jsx
+|   |       Settings.jsx
+|   |       SharedDashboard.jsx
+|   |       Tasks.jsx
+|   |       
+|   +---Support
+|   |       Clients.jsx
+|   |       Dashboard.jsx
+|   |       Leads.jsx
+|   |       Reports.jsx
+|   |       Settings.jsx
+|   |       SupportDashboard.jsx
+|   |       Tasks.jsx
+|   |       
+|   +---TeamLead
+|   |       Clients.jsx
+|   |       Dashboard.jsx
+|   |       Leads.jsx
+|   |       Reports.jsx
+|   |       Settings.jsx
+|   |       Tasks.jsx
+|   |       TeamLeadDashboard.jsx
+|   |       
+|   +---Tech
+|   |       Clients.jsx
+|   |       Dashboard.jsx
+|   |       Leads.jsx
+|   |       Reports.jsx
+|   |       Settings.jsx
+|   |       Tasks.jsx
+|   |       TechDashboard.jsx
+|   |       
+|   \---Verifier
+|           Clients.jsx
+|           Dashboard.jsx
+|           Leads.jsx
+|           Reports.jsx
+|           Settings.jsx
+|           Tasks.jsx
+|           VerifierDashboard.jsx
+|           
++---crmPennyDebt
+|   +---Admin
+|   |       Audit.jsx
+|   |       Dashboard.jsx
+|   |       Leads.jsx
+|   |       Roles.jsx
+|   |       Settings.jsx
+|   |       Users.jsx
+|   |       
+|   +---Collection
+|   |       OverdueCases.jsx
+|   |       RepaymentTracker.jsx
+|   |       
+|   +---Credit
+|   |       BankStatementAnalysis.jsx
+|   |       CIBILCheck.jsx
+|   |       
+|   +---Customer
+|   |   |   CustomerForgotPassword.jsx
+|   |   |   CustomerLogin.jsx
+|   |   |   CustomerSignup.jsx
+|   |   |   Dashboard.jsx
+|   |   |   Debts.jsx
+|   |   |   Documents.jsx
+|   |   |   Payments.jsx
+|   |   |   Profile.jsx
+|   |   |   Progress.jsx
+|   |   |   Support.jsx
+|   |   |   
+|   |   \---CustomerDashboard
+|   |           CustomerDashboard.jsx
+|   |           Overview.jsx
+|   |           Payments.jsx
+|   |           Profile.jsx
+|   |           Progress.jsx
+|   |           Sidebar.jsx
+|   |           Support.jsx
+|   |           
+|   +---Dashboard
+|   |       AdminDashboard.jsx
+|   |       CustomerDashboard.jsx
+|   |       Dashboard.jsx
+|   |       EmployeeDashboard.jsx
+|   |       ManagerDashboard.jsx
+|   |       
+|   +---Disbursement
+|   |       ApprovedLoans.jsx
+|   |       DisbursementTracker.jsx
+|   |       
+|   +---Employee
+|   |       Accounts.jsx
+|   |       Applications.jsx
+|   |       Collections.jsx
+|   |       Dashboard.jsx
+|   |       Documents.jsx
+|   |       EmployeeForgotPassword.jsx
+|   |       EmployeeLogin.jsx
+|   |       Leads.jsx
+|   |       Reports.jsx
+|   |       Support.jsx
+|   |       
+|   +---Leads
+|   |       CreateLead.jsx
+|   |       LeadDetails.jsx
+|   |       LeadsList.jsx
+|   |       
+|   +---LoanInsight
+|   |       LoanDetails.jsx
+|   |       LoanStatus.jsx
+|   |       
+|   +---Manager
+|   |       Cases.jsx
+|   |       Dashboard.jsx
+|   |       Reports.jsx
+|   |       Team.jsx
+|   |       
+|   +---Operations
+|   |       DocumentVerification.jsx
+|   |       FieldInvestigation.jsx
+|   |       
+|   +---Reports
+|   |       CollectionReport.jsx
+|   |       PerformanceReport.jsx
+|   |       
+|   \---Shared
+|           Logout.jsx
+|           NotFound.jsx
+|           
++---Public
+\---Website
+        About.jsx
+        ApplyForm.jsx
+        Blog.jsx
+        Careers.jsx
+        Contact.jsx
+        FAQ.jsx
+        Home.jsx
+        PrivacyPolicy.jsx
+        Services.jsx
+        Signup.jsx
+        Terms.jsx
+        
