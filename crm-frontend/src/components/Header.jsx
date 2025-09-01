@@ -10,6 +10,7 @@ const navItems = [
   { label: "FAQ", to: "/faq" },
   { label: "Blog", to: "/blog" },
   { label: "Apply", to: "/applyform" },
+  { label: "Apply Loan", to: "/applyloan" },
 ];
 
 export default function Header() {

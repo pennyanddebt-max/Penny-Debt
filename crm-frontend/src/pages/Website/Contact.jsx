@@ -38,9 +38,12 @@ const Contact = () => {
     setError("");
 
     try {
-      // Replace with actual backend API call as needed
-      console.log("Submitted query:", formData);
-
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      if (!res.ok) throw new Error("Failed to submit query");
       setSubmitted(true);
       setFormData({ fullName: "", email: "", subject: "", message: "" });
     } catch (err) {
@@ -184,11 +187,11 @@ const Contact = () => {
             </h2>
             <p>
               📧 Email:{" "}
-              <strong style={{ userSelect: "text" }}>support@pennyanddebt.com</strong>
+              <strong style={{ userSelect: "text" }}>care@pennyanddebt.in</strong>
             </p>
             <p>
               ☎️ Phone:{" "}
-              <strong style={{ userSelect: "text" }}>+91 98765 43210</strong>
+                 <strong style={{ userSelect: "text" }}>+91 7814447895</strong>
             </p>
             <p>🏢 Address: 2nd Floor, Fintech Tower, Gurgaon, Haryana</p>
             <p>🕐 Working Hours: Mon–Sat, 9:00 AM – 6:00 PM</p>

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { getDashboardRouteForRole } from "../../utils/roleAccess";
 
 const CustomerLogin = () => {
   const navigate = useNavigate();
@@ -27,8 +28,10 @@ const CustomerLogin = () => {
       
       alert(response.data.message || "Login successful");
       
-      // Navigate to customer dashboard
-      navigate("/customer/dashboard");
+  // Navigate to role-based dashboard
+  const role = response.data?.user?.role || "customer";
+  const dashboardRoute = getDashboardRouteForRole(role);
+  navigate(dashboardRoute);
     } catch (err) {
       const errorMessage = err.response?.data?.message || "Login failed. Please check your credentials.";
       setError(errorMessage);

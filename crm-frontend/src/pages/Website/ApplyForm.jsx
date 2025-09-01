@@ -1,420 +1,269 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import axios from "axios";
 
-const ApplyForm = () => {
-  const [formData, setFormData] = useState({
-    full_name: "",
+const fontFamily = `'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif`;
+export default function DebtReliefEnrollment() {
+  const [form, setForm] = useState({
+    name: "",
     email: "",
-    mobile: "",
-    location: "",
-    debt_amount: "",
-    monthly_income: "",
-    existing_emis: "",
-    incomeSource: "",
-    occupation: "",
-    debtType: "",
-    additionalNotes: "",
+    phone: "",
+    totalDebt: "",
+    city: "",
+    pincode: "",
+    message: "",
+    loanType: "personal"
   });
-  const [submitting, setSubmitting] = useState(false);
-  const [message, setMessage] = useState("");
+
+  const [submitted, setSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-    if (message) setMessage("");
+    setForm(prev => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitting(true);
-    setMessage("");
+    setIsLoading(true);
+    
     try {
-      const res = await axios.post("http://localhost:5000/api/apply-form/submit", formData);
-      alert(res.data.message || "Application submitted successfully!");
-      setFormData({
-        full_name: "",
-        email: "",
-        mobile: "",
-        location: "",
-        debt_amount: "",
-        monthly_income: "",
-        existing_emis: "",
-        incomeSource: "",
-        occupation: "",
-        debtType: "",
-        additionalNotes: "",
-      });
-    } catch (err) {
-      console.error(err);
-      alert("Submission failed. Please try again later.");
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      // In a real app, you would use:
+      // const res = await fetch("/api/debt-enroll/submit", {
+      //   method: "POST",
+      //   headers: { "Content-Type": "application/json" },
+      //   body: JSON.stringify(form),
+      // });
+      // if (!res.ok) throw new Error("Submission failed");
+
+      setSubmitted(true);
+    } catch (error) {
+      alert("Failed to submit. Please try again.");
     } finally {
-      setSubmitting(false);
+      setIsLoading(false);
     }
   };
 
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { 
+      opacity: 1,
+      transition: { staggerChildren: 0.1 }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: { 
+      y: 0,
+      opacity: 1,
+      transition: { type: "spring", stiffness: 100 }
+    }
+  };
+
+  if (submitted) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 flex items-center justify-center p-4">
+        <motion.div 
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full text-center"
+        >
+          <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg className="w-12 h-12 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <h2 className="text-2xl font-bold text-gray-800 mb-2">Enrollment Successful!</h2>
+          <p className="text-gray-600 mb-6">
+            Our debt relief specialist will contact you within 24 hours to discuss your options.
+          </p>
+          <div className="bg-blue-50 p-4 rounded-lg text-left">
+            <h3 className="font-medium text-blue-800 mb-2">Next Steps:</h3>
+            <ul className="list-disc pl-5 space-y-1 text-sm text-gray-700">
+              <li>Verification call from our team</li>
+              <li>Document collection</li>
+              <li>Custom debt relief plan</li>
+            </ul>
+          </div>
+        </motion.div>
+      </div>
+    );
+  }
+
   return (
-    <section
-      aria-labelledby="apply-form-heading"
-      style={{
-        minHeight: "100vh",
-        position: "relative",
-        padding: "32px 24px",
-        background: "linear-gradient(135deg, #e3f0ff 0%, #f7faff 100%)",
-        borderRadius: 16,
-        boxShadow: "0 8px 32px rgb(0 112 243 / 0.08)",
-        fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-        userSelect: "none",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        overflow: "hidden",
-      }}
-    >
-      {/* Gradient background overlay */}
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          zIndex: 0,
-          background: "linear-gradient(135deg, #e3f0ff 0%, #f7faff 100%)",
-        }}
-      />
-      {/* Glassmorphism Layer */}
-      <div
-        style={{
-          position: "absolute",
-          top: 40,
-          left: 40,
-          width: "80%",
-          height: "80%",
-          background: "rgba(255,255,255,0.45)",
-          borderRadius: 32,
-          backdropFilter: "blur(12px)",
-          zIndex: 1,
-          pointerEvents: "none",
-        }}
-      />
-      {/* Animated Accent Ball (brand style) */}
-      <motion.div
-        initial={{ y: 0, scale: 1, opacity: 0.35 }}
-        animate={{ y: [0, -30, 0], scale: [1, 1.15, 1], opacity: [0.35, 0.5, 0.35] }}
-        transition={{ duration: 1.2, repeat: Infinity }}
-        style={{
-          position: "fixed",
-          top: "12vh",
-          right: "6vw",
-          width: 140,
-          height: 140,
-          borderRadius: "50%",
-          background: "radial-gradient(circle at 40% 40%, #0070f3 0%, #8fb9ff 100%)",
-          zIndex: 100,
-          filter: "blur(10px)",
-          pointerEvents: "none",
-        }}
-      />
-
-      {/* Form container */}
-      <motion.form
-        onSubmit={handleSubmit}
-        style={{
-          position: "relative",
-          zIndex: 10,
-          maxWidth: 800,
-          width: "100%",
-          backgroundColor: "#fff",
-          borderRadius: 24,
-          padding: 36,
-          boxShadow: "0 12px 40px rgb(0 112 243 / 0.15)",
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-          gap: 24,
-          boxSizing: "border-box",
-          userSelect: "auto",
-        }}
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.1, duration: 0.7 }}
-        noValidate
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 flex items-center justify-center p-4">
+      <motion.div 
+        initial="hidden"
+        animate="visible"
+        variants={containerVariants}
+        className="bg-white rounded-2xl shadow-xl overflow-hidden max-w-4xl w-full"
       >
-        {/* Full Name */}
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <label htmlFor="full_name" style={labelStyle}>
-            Full Name
-          </label>
-          <input
-            id="full_name"
-            name="full_name"
-            type="text"
-            value={formData.full_name}
-            onChange={handleChange}
-            placeholder="Enter your full name"
-            style={inputStyle}
-            required
-            disabled={submitting}
-            autoComplete="name"
-          />
+  <div className="md:flex">
+          {/* Left Side - Visuals */}
+          <div className="md:w-2/5 bg-gradient-to-b from-blue-600 to-indigo-700 p-6 text-white hidden md:block">
+            <motion.div 
+              variants={itemVariants}
+              className="flex flex-col h-full justify-center items-center"
+            >
+              <div>
+                <h1 className="text-2xl font-bold mb-2">DebtFree Solutions</h1>
+                <h2 className="text-xl font-semibold mb-3">Find Your Path to Financial Freedom</h2>
+                <p className="text-blue-100 mb-6 text-sm text-center">
+                  Our experts will analyze your debt situation and create a customized plan to help you regain control of your finances.
+                </p>
+              </div>
+            </motion.div>
+          </div>
+          
+          {/* Right Side - Form */}
+          <div className="md:w-3/5 p-8 flex items-center justify-center">
+            <motion.div variants={itemVariants} className="w-full max-w-lg">
+              <h2 className="text-2xl font-bold text-gray-800 mb-2 text-center">Debt Relief Enrollment</h2>
+              <p className="text-gray-600 mb-6 text-center">Complete this form to begin your journey to financial freedom</p>
+              <form onSubmit={handleSubmit} className="space-y-4 bg-white/90 border border-blue-100 rounded-2xl shadow-lg px-8 py-8">
+              <motion.div variants={itemVariants}>
+                <label className="block text-sm font-semibold text-blue-700 mb-1">Full Name</label>
+                <input
+                  type="text"
+                  name="name"
+                  value={form.name}
+                  onChange={handleChange}
+                  required
+                  className="w-full px-4 py-3 rounded-lg border border-blue-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition placeholder-gray-400"
+                  placeholder="John Doe"
+                />
+              </motion.div>
+              
+              <div className="grid md:grid-cols-2 gap-4">
+                <motion.div variants={itemVariants}>
+                  <label className="block text-sm font-semibold text-blue-700 mb-1">Email</label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={form.email}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+                    placeholder="john@example.com"
+                  />
+                </motion.div>
+                
+                <motion.div variants={itemVariants}>
+                  <label className="block text-sm font-semibold text-blue-700 mb-1">Phone</label>
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={form.phone}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+                    placeholder="+91 9876543210"
+                  />
+                </motion.div>
+              </div>
+              
+              <motion.div variants={itemVariants}>
+                <label className="block text-sm font-semibold text-blue-700 mb-1">Total Debt Amount (₹)</label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <span className="text-gray-500">₹</span>
+                  </div>
+                  <input
+                    type="number"
+                    name="totalDebt"
+                    value={form.totalDebt}
+                    onChange={handleChange}
+                    required
+                    min="10000"
+                    className="w-full pl-8 px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+                    placeholder="50,000"
+                  />
+                </div>
+              </motion.div>
+              
+              <motion.div variants={itemVariants}>
+                <label className="block text-sm font-semibold text-blue-700 mb-1">Debt Type</label>
+                <select
+                  name="loanType"
+                  value={form.loanType}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-white"
+                >
+                  <option value="personal">Personal Loan</option>
+                  <option value="credit-card">Credit Card Debt</option>
+                  <option value="medical">Medical Bills</option>
+                  <option value="business">Business Debt</option>
+                  <option value="other">Other</option>
+                </select>
+              </motion.div>
+              
+              <div className="grid md:grid-cols-2 gap-4">
+                <motion.div variants={itemVariants}>
+                  <label className="block text-sm font-semibold text-blue-700 mb-1">City</label>
+                  <input
+                    type="text"
+                    name="city"
+                    value={form.city}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+                    placeholder="Mumbai"
+                  />
+                </motion.div>
+                
+                <motion.div variants={itemVariants}>
+                  <label className="block text-sm font-semibold text-blue-700 mb-1">Pincode</label>
+                  <input
+                    type="text"
+                    name="pincode"
+                    value={form.pincode}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+                    placeholder="400001"
+                  />
+                </motion.div>
+              </div>
+              
+              <motion.div variants={itemVariants}>
+                <label className="block text-sm font-semibold text-blue-700 mb-1">Additional Information (Optional)</label>
+                <textarea
+                  name="message"
+                  value={form.message}
+                  onChange={handleChange}
+                  rows={3}
+                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+                  placeholder="Tell us more about your debt situation..."
+                />
+              </motion.div>
+              
+              <motion.div variants={itemVariants} className="pt-2">
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold py-4 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center"
+                  style={{ letterSpacing: 1.1 }}
+                >
+                  {isLoading ? (
+                    <span className="animate-pulse">Processing...</span>
+                  ) : (
+                    "Begin Debt Relief Process"
+                  )}
+                </button>
+              </motion.div>
+              
+              <motion.div variants={itemVariants} className="text-center text-xs text-gray-400 mt-4">
+                <p>By submitting, you agree to our <a href="#" className="text-blue-600 hover:underline">Terms</a> and <a href="#" className="text-blue-600 hover:underline">Privacy Policy</a></p>
+              </motion.div>
+            </form>
+          </motion.div>
         </div>
-
-        {/* Email */}
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <label htmlFor="email" style={labelStyle}>
-            Email
-          </label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            value={formData.email}
-            onChange={handleChange}
-            placeholder="Enter your email"
-            style={inputStyle}
-            required
-            disabled={submitting}
-            autoComplete="email"
-          />
         </div>
-
-        {/* Mobile */}
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <label htmlFor="mobile" style={labelStyle}>
-            Mobile
-          </label>
-          <input
-            id="mobile"
-            name="mobile"
-            type="tel"
-            value={formData.mobile}
-            onChange={handleChange}
-            placeholder="Enter your mobile number"
-            style={inputStyle}
-            required
-            disabled={submitting}
-            autoComplete="tel"
-          />
-        </div>
-
-        {/* Location */}
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <label htmlFor="location" style={labelStyle}>
-            Location
-          </label>
-          <select
-            id="location"
-            name="location"
-            value={formData.location}
-            onChange={handleChange}
-            style={inputStyle}
-            required
-            disabled={submitting}
-          >
-            <option value="">Select your city</option>
-            {/* List a subset or full list of cities here */}
-            <option value="Mumbai">Mumbai</option>
-            <option value="Delhi">Delhi</option>
-            <option value="Bangalore">Bangalore</option>
-            <option value="Hyderabad">Hyderabad</option>
-            <option value="Chennai">Chennai</option>
-            <option value="Pune">Pune</option>
-            <option value="Kolkata">Kolkata</option>
-            <option value="Ahmedabad">Ahmedabad</option>
-            {/* Add more options as needed */}
-          </select>
-        </div>
-
-        {/* Debt Amount */}
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <label htmlFor="debt_amount" style={labelStyle}>
-            Debt Amount (₹)
-          </label>
-          <input
-            id="debt_amount"
-            name="debt_amount"
-            type="number"
-            min="0"
-            step="any"
-            value={formData.debt_amount}
-            onChange={handleChange}
-            placeholder="Enter your total debt amount"
-            style={inputStyle}
-            required
-            disabled={submitting}
-          />
-        </div>
-
-        {/* Monthly Income */}
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <label htmlFor="monthly_income" style={labelStyle}>
-            Monthly Income (₹)
-          </label>
-          <input
-            id="monthly_income"
-            name="monthly_income"
-            type="number"
-            min="0"
-            step="any"
-            value={formData.monthly_income}
-            onChange={handleChange}
-            placeholder="Enter your monthly income"
-            style={inputStyle}
-            required
-            disabled={submitting}
-          />
-        </div>
-
-        {/* Existing EMIs */}
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <label htmlFor="existing_emis" style={labelStyle}>
-            Existing EMIs (₹)
-          </label>
-          <input
-            id="existing_emis"
-            name="existing_emis"
-            type="number"
-            min="0"
-            step="any"
-            value={formData.existing_emis}
-            onChange={handleChange}
-            placeholder="Enter existing EMI amount"
-            style={inputStyle}
-            required
-            disabled={submitting}
-          />
-        </div>
-
-        {/* Income Source */}
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <label htmlFor="incomeSource" style={labelStyle}>
-            Income Source
-          </label>
-          <input
-            id="incomeSource"
-            name="incomeSource"
-            type="text"
-            value={formData.incomeSource}
-            onChange={handleChange}
-            placeholder="Describe your income source"
-            style={inputStyle}
-            required
-            disabled={submitting}
-          />
-        </div>
-
-        {/* Occupation */}
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <label htmlFor="occupation" style={labelStyle}>
-            Occupation
-          </label>
-          <input
-            id="occupation"
-            name="occupation"
-            type="text"
-            value={formData.occupation}
-            onChange={handleChange}
-            placeholder="Enter your occupation"
-            style={inputStyle}
-            required
-            disabled={submitting}
-          />
-        </div>
-
-        {/* Debt Type */}
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <label htmlFor="debtType" style={labelStyle}>
-            Debt Type
-          </label>
-          <input
-            id="debtType"
-            name="debtType"
-            type="text"
-            value={formData.debtType}
-            onChange={handleChange}
-            placeholder="Specify debt type (e.g., credit card, personal loan)"
-            style={inputStyle}
-            required
-            disabled={submitting}
-          />
-        </div>
-
-        {/* Additional Notes - full width */}
-        <div
-          style={{
-            gridColumn: "1 / -1",
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
-          <label htmlFor="additionalNotes" style={labelStyle}>
-            Additional Notes (optional)
-          </label>
-          <textarea
-            id="additionalNotes"
-            name="additionalNotes"
-            value={formData.additionalNotes}
-            onChange={handleChange}
-            placeholder="Provide any extra information..."
-            rows={5}
-            style={{
-              ...inputStyle,
-              resize: "vertical",
-              minHeight: 120,
-            }}
-            disabled={submitting}
-          />
-        </div>
-
-        {/* Submit Button - full width */}
-        <button
-          type="submit"
-          disabled={submitting}
-          style={{
-            gridColumn: "1 / -1",
-            padding: "16px 0",
-            fontSize: 18,
-            fontWeight: "700",
-            color: "#fff",
-            background: submitting
-              ? "linear-gradient(90deg, #8fb9ff 0%, #6a94ff 100%)"
-              : "linear-gradient(90deg, #0070f3 0%, #005bb5 100%)",
-            border: "none",
-            borderRadius: 10,
-            cursor: submitting ? "not-allowed" : "pointer",
-            transition: "background 0.3s ease",
-            boxShadow: submitting
-              ? "none"
-              : "0 12px 32px rgb(0 112 243 / 0.4), 0 6px 20px rgb(0 83 181 / 0.35)",
-            userSelect: "none",
-          }}
-          aria-busy={submitting}
-        >
-          {submitting ? "Submitting..." : "Submit Application"}
-        </button>
-      </motion.form>
-    </section>
+      </motion.div>
+    </div>
   );
-};
-
-const labelStyle = {
-  marginBottom: 6,
-  fontWeight: "700",
-  fontSize: 16,
-  color: "#223759",
-  userSelect: "text",
-};
-
-const inputStyle = {
-  padding: "12px 16px",
-  fontSize: 16,
-  borderRadius: 8,
-  border: "1.8px solid #d1d9f0",
-  boxShadow: "inset 0 2px 6px rgb(0 0 0 / 0.05)",
-  transition: "border-color 0.25s ease, box-shadow 0.25s ease",
-  outlineOffset: 2,
-  fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-  userSelect: "auto",
-};
-
-export default ApplyForm;
+}

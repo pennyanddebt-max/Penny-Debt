@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
+
 import { useNavigate } from "react-router-dom";
+import { getDashboardRouteForRole } from "../../utils/roleAccess";
 
 const EmployeeLogin = () => {
   const navigate = useNavigate();
@@ -75,10 +77,8 @@ const EmployeeLogin = () => {
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    
-    // Validate captcha
     if (
       formData.captchaInput.trim().toUpperCase() !== captcha.toUpperCase()
     ) {
@@ -92,27 +92,26 @@ const EmployeeLogin = () => {
     setCaptchaValid(true);
     setFormError("");
 
-    try {
-      const response = await axios.post("http://localhost:5000/api/employee-auth/login", {
-        identifier: formData.identifier,
-        password: formData.password
-      });
-      
-      // Save token and user info to localStorage
-      localStorage.setItem("employeeToken", response.data.token);
-      localStorage.setItem("employeeUser", JSON.stringify(response.data.user));
-      
-      alert(response.data.message || "Login successful");
-      
-      // Navigate to employee dashboard
-      navigate("/employee/dashboard");
-    } catch (err) {
-      const errorMessage = err.response?.data?.message || "Login failed. Please check your credentials.";
-      setFormError(errorMessage);
-      console.error("Employee login error:", err);
-    }
 
-    // Reset form
+    axios.post("http://localhost:5000/api/employee-auth/login", {
+      identifier: formData.identifier,
+      password: formData.password
+    })
+      .then(res => {
+        alert(res.data.message || "Login successful");
+        // Save user info in localStorage
+        localStorage.setItem("employee", JSON.stringify(res.data));
+        // Redirect to role-based dashboard
+        const role = res.data?.employee?.role || res.data?.role;
+        const dashboardRoute = getDashboardRouteForRole(role);
+        navigate(dashboardRoute);
+      })
+      .catch(err => {
+        alert(
+          err.response?.data?.message || "Login failed. Please check your credentials."
+        );
+      });
+
     setFormData({
       identifier: "",
       password: "",

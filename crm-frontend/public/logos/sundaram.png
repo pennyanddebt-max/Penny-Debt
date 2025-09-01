@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <base href="https://custom-page.apptrana.com/sundaramfinance.in/maintenance/" target="_blank">
+  <title>Scheduled Network Maintenance</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0a1a3f, #1f3b73);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+      color: #fff;
+    }
+    img {
+      max-width: 200px;
+      margin-bottom: 25px;
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5));
+    }
+    h1 {
+      color: #ffd700;
+      margin-bottom: 12px;
+      font-size: 32px;
+      letter-spacing: 1px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+    }
+    p {
+      font-size: 18px;
+      max-width: 520px;
+      line-height: 1.6;
+      background: rgba(255,255,255,0.1);
+      padding: 15px 20px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,215,0,0.6);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    }
+    strong {
+      color: #ffd700;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Replace with your actual logo file or URL -->
+  <!--<img src="E:\sitemaintenance\logo_sf_2.png" alt="Company Logo">-->
+  
+  <h1>Maintenance Activity</h1>
+  <p>
+    The planned maintenance activity is scheduled between <strong>3:00 AM</strong> and <strong>11:00 AM</strong> IST  
+    on <strong>15 August 2025</strong>.  
+    Services may be temporarily unavailable during this period.
+  </p>
+
+</body>
+</html>

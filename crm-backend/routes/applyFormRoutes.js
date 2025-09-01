@@ -2,6 +2,9 @@ const express = require("express");
 const router = express.Router();
 const db = require("../config/db");
 
+
+const sendMail = require("../utils/sendMail");
+
 // Submit debt relief application
 router.post("/submit", async (req, res) => {
   const {
@@ -37,6 +40,14 @@ router.post("/submit", async (req, res) => {
         additionalNotes
       ]
     );
+
+    // Send notification email to care@pennyanddebt.in
+    await sendMail({
+      subject: "New Debt Relief Application Submitted",
+      to: "care@pennyanddebt.in",
+      text: `A new application has been submitted.\n\nName: ${full_name}\nEmail: ${email}\nMobile: ${mobile}\nLocation: ${location}\nDebt Amount: ${debt_amount}\nMonthly Income: ${monthly_income}\nExisting EMIs: ${existing_emis}\nIncome Source: ${incomeSource}\nOccupation: ${occupation}\nDebt Type: ${debtType}\nNotes: ${additionalNotes}`
+    });
+
     res.status(200).json({ message: "Application submitted successfully!" });
   } catch (err) {
     console.error(err);

@@ -1,4 +1,71 @@
--- Penny & Debt CRM: Core Tables
+
+CREATE TABLE IF NOT EXISTS loan_applications (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100),
+  email VARCHAR(100),
+  phone VARCHAR(20),
+  amount DECIMAL(12,2),
+  product VARCHAR(100),
+  purpose VARCHAR(255),
+  details JSON,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS careers_applications (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  fullName VARCHAR(100),
+  email VARCHAR(100),
+  resume_path VARCHAR(255),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Employees table with hierarchy, department, and RBAC
+CREATE TABLE IF NOT EXISTS employees (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  email VARCHAR(100) UNIQUE NOT NULL,
+  password VARCHAR(255) NOT NULL,
+  role VARCHAR(50) NOT NULL,
+  department VARCHAR(50),
+  manager_id INT,
+  status VARCHAR(20) DEFAULT 'active',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (manager_id) REFERENCES employees(id)
+);
+
+-- Roles table for RBAC (optional, for extensibility)
+CREATE TABLE IF NOT EXISTS roles (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(50) UNIQUE NOT NULL,
+  description VARCHAR(255)
+);
+
+-- Employee_Roles mapping (for many-to-many, if needed)
+CREATE TABLE IF NOT EXISTS employee_roles (
+  employee_id INT,
+  role_id INT,
+  PRIMARY KEY (employee_id, role_id),
+  FOREIGN KEY (employee_id) REFERENCES employees(id),
+  FOREIGN KEY (role_id) REFERENCES roles(id)
+);
+
+-- Example hierarchy/roles: Admin, TeamLead, Marketing, HR, Verifier, Tech, Support, Shared, Recovery, Legal, Operations, Advisor, Customer
+
+-- Sample insert for roles (add more as needed)
+INSERT IGNORE INTO roles (name, description) VALUES
+('admin', 'System Administrator'),
+('teamlead', 'Team Lead'),
+('marketing', 'Marketing Department'),
+('hr', 'Human Resources'),
+('verifier', 'Verification Team'),
+('tech', 'Technical Team'),
+('support', 'Support Team'),
+('shared', 'Shared Services'),
+('recovery', 'Recovery Team'),
+('legal', 'Legal Department'),
+('operations', 'Operations Department'),
+('advisor', 'Advisor'),
+('customer', 'Customer');
 
 CREATE TABLE IF NOT EXISTS customers (
   id INT AUTO_INCREMENT PRIMARY KEY,

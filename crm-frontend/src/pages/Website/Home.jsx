@@ -1,4 +1,71 @@
+
 import React, { useState, useEffect, useRef } from "react";
+
+// Animated Stat Card Component
+const StatCard = ({ label, value, prefix = "", suffix = "" }) => {
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    let start = 0;
+    const end = value;
+    if (start === end) return;
+    let incrementTime = 18;
+    let step = Math.ceil(end / 60);
+    const timer = setInterval(() => {
+      start += step;
+      if (start >= end) {
+        start = end;
+        clearInterval(timer);
+      }
+      setCount(start);
+    }, incrementTime);
+    return () => clearInterval(timer);
+  }, [value]);
+  return (
+    <div style={{
+      minWidth: 180,
+      minHeight: 110,
+      background: "#fff",
+      borderRadius: 18,
+      boxShadow: "0 4px 24px rgba(0,112,243,0.10)",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      padding: "24px 18px 18px 18px",
+      margin: 8,
+      position: "relative",
+      overflow: "hidden",
+      animation: "fadeInUp 1s cubic-bezier(.23,1.02,.64,1)"
+    }}>
+      <div style={{
+        fontSize: 38,
+        fontWeight: 900,
+        color: "#0070f3",
+        letterSpacing: 1,
+        marginBottom: 6,
+        textShadow: "0 2px 8px #0070f322"
+      }}>
+        {prefix}{count.toLocaleString()}{suffix}
+      </div>
+      <div style={{
+        fontSize: 18,
+        color: "#223759cc",
+        fontWeight: 600,
+        letterSpacing: 0.5
+      }}>{label}</div>
+      <div style={{
+        position: "absolute",
+        bottom: -18,
+        right: -18,
+        width: 48,
+        height: 48,
+        background: "#eaf5ff",
+        borderRadius: "50%",
+        zIndex: 0
+      }} />
+    </div>
+  );
+};
 
 const fontFamily = `'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif`;
 
@@ -69,23 +136,9 @@ const Button = ({ children, onClick, style, to, ariaLabel }) => {
   );
 };
 
+
 /* Hero Section with advanced gradient text, background blur circles & floating shapes */
 const Hero = () => {
-  const messages = [
-    "Empowering Your Financial Freedom with Compassion & Expertise",
-    "Expert Debt Relief, Credit Recovery & Legal Support Tailored for You",
-    "Your Path to Debt-Free Living Starts Here – With Penny & Debt",
-    "Transparent, Trusted & Proven Debt Solutions for Lasting Results",
-  ];
-  const [messageIndex, setMessageIndex] = useState(0);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setMessageIndex((i) => (i + 1) % messages.length);
-    }, 3500);
-    return () => clearInterval(timer);
-  }, [messages.length]);
-
   const floatingStyle = (delay, size, x, y, bgColor, opacity = 0.15) => ({
     position: "absolute",
     top: y,
@@ -101,196 +154,172 @@ const Hero = () => {
     pointerEvents: "none",
   });
 
-  return (
-    <section
-      id="home"
-      style={{
-        minHeight: "85vh",
-        backgroundColor: "#f5faff",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-around",
-        padding: "80px 48px",
-        fontFamily,
-        flexWrap: "wrap",
-        gap: 28,
-        overflow: "hidden",
-        position: "relative",
-      }}
-      aria-label="Hero section introducing Penny & Debt - India's premier debt relief service"
-    >
-      <style>{`
-        @keyframes floatUpDown {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-22px); }
-        }
-        .gradient-text {
-          background: linear-gradient(
-            90deg,
-            #0070f3,
-            #00b4ff,
-            #005bb5,
-            #0070f3,
-            #00b4ff
-          );
-          background-size: 400% 400%;
-          animation: gradientShift 12s ease infinite;
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          user-select: none;
-        }
-        @keyframes gradientShift {
-          0% {
-            background-position: 0% 50%;
-          }
-          50% {
-            background-position: 100% 50%;
-          }
-          100% {
-            background-position: 0% 50%;
-          }
-        }
-      `}</style>
-      <div style={{ maxWidth: 560, flex: "1 1 420px", textAlign: "left", userSelect: "text" }}>
-        <h1
-          style={{
-            fontSize: 48,
-            fontWeight: 900,
-            marginBottom: 22,
-            color: "#0070f3",
-            lineHeight: 1.08,
-            userSelect: "none",
-            textShadow: "0 3px 8px rgba(0,112,243,0.3)",
-          }}
-          className="gradient-text"
-        >
-          India's Best Debt Relief Service Provider
-        </h1>
-        <p
-          style={{
-            fontSize: 24,
-            marginBottom: 36,
-            color: "#223759cc",
-            fontWeight: 600,
-            minHeight: 80,
-            lineHeight: 1.45,
-            fontFamily: "'Segoe UI', sans-serif",
-          }}
-          aria-live="polite"
-          aria-atomic="true"
-        >
-          {messages[messageIndex]}
-        </p>
-        <Button to="#applyform" ariaLabel="Get started with Penny & Debt">
-          Get Started Today
-        </Button>
-      </div>
-      <div
-        style={{
-          flex: "1 1 460px",
-          maxWidth: 460,
-          position: "relative",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          userSelect: "none",
-          borderRadius: 20,
-          boxShadow: "0 14px 48px rgba(0,112,243,0.22)",
-          background: "linear-gradient(135deg, #eaf5ff 25%, #ffffff 95%)",
-          overflow: "hidden",
-        }}
-        aria-hidden="true"
-      >
-        {/* Replace with your high-res debt relief illustration */}
-        <img
-          src={"/assets/debt-relief-illustration.png"}
-          alt="Relieved individual breaking free from chains of debt, symbolizing financial freedom"
-          style={{
-            width: "100%",
-            maxWidth: 360,
-            borderRadius: 20,
-            filter: "drop-shadow(0 0 10px rgba(0,83,181,0.3))",
-            animation: "floatUpDown 6s ease-in-out infinite",
-          }}
-          loading="eager"
-          decoding="async"
-        />
-        <div style={floatingStyle("0s", 130, "6%", "8%", "#0070f3", 0.16)} />
-        <div style={floatingStyle("2s", 92, "78%", "30%", "#00b4ff", 0.12)} />
-        <div style={floatingStyle("4s", 110, "82%", "70%", "#005bb5", 0.1)} />
-      </div>
-    </section>
-  );
-};
 
-/* Extended About Section with multi-paragraph info & professional tone */
-const About = () => {
+
+  const messages = [
+    "Empowering Your Financial Freedom with Compassion & Expertise",
+    "Expert Debt Relief, Credit Recovery & Legal Support Tailored for You",
+    "Your Path to Debt-Free Living Starts Here – With Penny & Debt",
+    "Transparent, Trusted & Proven Debt Solutions for Lasting Results",
+  ];
+  const [messageIndex] = useState(0);
+
   return (
     <>
-      <style>{`
-        .fade-in {
-          animation: fadeInUp 1.2s ease forwards;
-          opacity: 0;
-          transform: translateY(26px);
-        }
-        @keyframes fadeInUp {
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-      `}</style>
       <section
-        id="about"
-        className="fade-in"
+        id="home"
         style={{
-          backgroundColor: "#ffffff",
-          padding: "80px 38px",
-          maxWidth: 920,
-          margin: "64px auto",
-          textAlign: "center",
-          borderRadius: 20,
-          boxShadow: "0 12px 38px rgba(0, 112, 243, 0.16)",
+          minHeight: "85vh",
+          backgroundColor: "#f5faff",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-around",
+          padding: "80px 48px",
           fontFamily,
-          color: "#2c3e50",
-          userSelect: "text",
-          fontSize: 18,
-          lineHeight: 1.62,
-          fontWeight: "500",
+          flexWrap: "wrap",
+          gap: 28,
+          overflow: "hidden",
+          position: "relative",
         }}
-        aria-label="About Penny & Debt - Our Mission and Expertise"
+        aria-label="Hero section introducing Penny & Debt - India's premier debt relief service"
       >
-        <h2
+        <style>{`
+          @keyframes floatUpDown {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-22px); }
+          }
+          .gradient-text {
+            background: linear-gradient(
+              90deg,
+              #0070f3,
+              #00b4ff,
+              #005bb5,
+              #0070f3,
+              #00b4ff
+            );
+            background-size: 400% 400%;
+            animation: gradientShift 12s ease infinite;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            user-select: none;
+          }
+          @keyframes gradientShift {
+            0% {
+              background-position: 0% 50%;
+            }
+            50% {
+              background-position: 100% 50%;
+            }
+            100% {
+              background-position: 0% 50%;
+            }
+          }
+        `}</style>
+        <div style={{ maxWidth: 560, flex: "1 1 420px", textAlign: "left", userSelect: "text" }}>
+          <h1
+            style={{
+              fontSize: 48,
+              fontWeight: 900,
+              marginBottom: 22,
+              color: "#0070f3",
+              lineHeight: 1.08,
+              userSelect: "none",
+              textShadow: "0 3px 8px rgba(0,112,243,0.3)",
+            }}
+            className="gradient-text"
+          >
+            India's Best Debt Relief Service Provider
+          </h1>
+          <p
+            style={{
+              fontSize: 24,
+              marginBottom: 36,
+              color: "#223759cc",
+              fontWeight: 600,
+              minHeight: 80,
+              lineHeight: 1.45,
+              fontFamily: "'Segoe UI', sans-serif",
+            }}
+            aria-live="polite"
+            aria-atomic="true"
+          >
+            {messages[messageIndex]}
+          </p>
+          <Button to="#applyform" ariaLabel="Get started with Penny & Debt">
+            Get Started Today
+          </Button>
+        </div>
+        <div
           style={{
-            fontSize: 38,
-            fontWeight: "900",
-            color: "#0070f3",
-            marginBottom: 28,
+            flex: "1 1 460px",
+            maxWidth: 460,
+            position: "relative",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
             userSelect: "none",
+            borderRadius: 20,
+            boxShadow: "0 14px 48px rgba(0,112,243,0.22)",
+            background: "linear-gradient(135deg, #eaf5ff 25%, #ffffff 95%)",
+            overflow: "hidden",
           }}
+          aria-hidden="true"
         >
-          About Penny & Debt
-        </h2>
-        <p>
-          Penny & Debt is India's premier debt relief consultancy, committed to empowering individuals
-          across the nation with lasting and ethical financial solutions tailored to their unique needs.
-          We specialize in debt negotiation, legal protection against harassment, and comprehensive
-          credit rebuilding strategies to help you regain financial stability with confidence.
-        </p>
-        <p style={{ marginTop: 20 }}>
-          Our seasoned team of debt counselors, legal experts, and financial planners work collaboratively
-          to devise personalized repayment plans that reduce burdensome debt while safeguarding your rights.
-          By fostering transparency and trust, we ensure you're fully informed and supported throughout every
-          step of your journey towards debt freedom.
-        </p>
-        <p style={{ marginTop: 20 }}>
-          Whether you're struggling with credit card balances, personal loans, or unsecured debts, Penny & Debt
-          provides a realistic pathway out of financial distress — with no hidden fees or confusing jargon,
-          just honest advice and actionable solutions. Join over 5,000 satisfied clients who have transformed
-          their financial lives with our guidance.
-        </p>
+          {/* Replace with your high-res debt relief illustration */}
+          <img
+            src={"/assets/debt-relief-illustration.png"}
+            alt="Relieved individual breaking free from chains of debt, symbolizing financial freedom"
+            style={{
+              width: "100%",
+              maxWidth: 360,
+              borderRadius: 20,
+              filter: "drop-shadow(0 0 10px rgba(0,83,181,0.3))",
+              animation: "floatUpDown 6s ease-in-out infinite",
+            }}
+            loading="eager"
+            decoding="async"
+          />
+          <div style={floatingStyle("0s", 130, "6%", "8%", "#0070f3", 0.16)} />
+          <div style={floatingStyle("2s", 92, "78%", "30%", "#00b4ff", 0.12)} />
+          <div style={floatingStyle("4s", 110, "82%", "70%", "#005bb5", 0.1)} />
+        </div>
       </section>
     </>
+  );
+  };
+// Extended About Section with multi-paragraph info & professional tone
+// Extended About Section with multi-paragraph info & professional tone
+const About = () => {
+  return (
+    <section
+      style={{
+        fontFamily,
+        color: "#2c3e50",
+        userSelect: "text",
+        fontSize: 18,
+        lineHeight: 1.62,
+        fontWeight: 500,
+        padding: "48px 0",
+        maxWidth: 900,
+        margin: "0 auto"
+      }}
+      aria-label="About Penny & Debt - Our Mission and Expertise"
+    >
+      <h2
+        style={{
+          fontSize: 38,
+          fontWeight: 900,
+          color: "#0070f3",
+          marginBottom: 28,
+          userSelect: "none",
+        }}
+      >
+        About Penny & Debt
+      </h2>
+      <p>
+        Whether you're struggling with credit card balances, personal loans, or unsecured debts, Penny & Debt provides a realistic pathway out of financial distress — with no hidden fees or confusing jargon, just honest advice and actionable solutions. Join over 5,000 satisfied clients who have transformed their financial lives with our guidance.
+      </p>
+    </section>
   );
 };
 
@@ -542,92 +571,123 @@ const Services = () => {
 };
 
 /* Why Choose Us section with icon pills and stable color theme */
+const whyChoosePoints = [
+  {
+    icon: (
+      <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" className="why-choose-animate"><circle cx="20" cy="20" r="18" stroke="#0070f3" strokeWidth="3" fill="#e3f0ff"><animate attributeName="r" values="18;20;18" dur="1.6s" repeatCount="indefinite"/></circle><polyline points="28 15 18 25 12 19" fill="none" stroke="#00b894" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round"><animate attributeName="points" values="28 15 18 25 12 19;28 17 18 27 12 21;28 15 18 25 12 19" dur="2s" repeatCount="indefinite"/></polyline></svg>
+    ),
+    text: "Transparent, Honest Process - No Hidden Fees",
+  },
+  {
+    icon: (
+      <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" className="why-choose-animate"><circle cx="20" cy="20" r="18" stroke="#ff9800" strokeWidth="3" fill="#fff8e1"><animate attributeName="r" values="18;20;18" dur="1.8s" repeatCount="indefinite"/></circle><path d="M20 12v8l6 4" stroke="#ff9800" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round"><animate attributeName="d" values="M20 12v8l6 4;M20 14v10l6 6;M20 12v8l6 4" dur="2.2s" repeatCount="indefinite"/></path></svg>
+    ),
+    text: "Trusted by Over 5,000+ Satisfied Clients Nationwide",
+  },
+  {
+    icon: (
+      <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" className="why-choose-animate"><circle cx="20" cy="20" r="18" stroke="#00bcd4" strokeWidth="3" fill="#e0f7fa"><animate attributeName="r" values="18;20;18" dur="1.7s" repeatCount="indefinite"/></circle><path d="M14 20l4 4 8-8" stroke="#00bcd4" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round"><animate attributeName="d" values="M14 20l4 4 8-8;M14 22l4 6 8-10;M14 20l4 4 8-8" dur="2s" repeatCount="indefinite"/></path></svg>
+    ),
+    text: "Guaranteed 100% Confidentiality & Data Security",
+  },
+  {
+    icon: (
+      <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" className="why-choose-animate"><circle cx="20" cy="20" r="18" stroke="#e91e63" strokeWidth="3" fill="#fce4ec"><animate attributeName="r" values="18;20;18" dur="1.5s" repeatCount="indefinite"/></circle><path d="M20 14v8" stroke="#e91e63" strokeWidth="3.5" strokeLinecap="round"/><circle cx="20" cy="26" r="2" fill="#e91e63"><animate attributeName="r" values="2;3;2" dur="1.2s" repeatCount="indefinite"/></circle></svg>
+    ),
+    text: "Experienced, Certified Debt & Legal Experts – No Bots",
+  },
+  {
+    icon: (
+      <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" className="why-choose-animate"><circle cx="20" cy="20" r="18" stroke="#4caf50" strokeWidth="3" fill="#e8f5e9"><animate attributeName="r" values="18;20;18" dur="1.9s" repeatCount="indefinite"/></circle><path d="M16 24l4-8 4 8" stroke="#4caf50" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round"><animate attributeName="d" values="M16 24l4-8 4 8;M16 26l4-10 4 10;M16 24l4-8 4 8" dur="2.1s" repeatCount="indefinite"/></path></svg>
+    ),
+    text: "Available In Multiple Regional Languages & Dialects",
+  },
+  {
+    icon: (
+      <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" className="why-choose-animate"><circle cx="20" cy="20" r="18" stroke="#9c27b0" strokeWidth="3" fill="#f3e5f5"><animate attributeName="r" values="18;20;18" dur="1.6s" repeatCount="indefinite"/></circle><rect x="14" y="18" width="12" height="4" rx="2" fill="#9c27b0"><animate attributeName="width" values="12;16;12" dur="1.8s" repeatCount="indefinite"/></rect></svg>
+    ),
+    text: "Flexible EMI & Customized Lump Sum Settlement Options",
+  },
+];
+
 const WhyChooseUs = () => {
-  const points = [
-    "Transparent, Honest Process - No Hidden Fees",
-    "Trusted by Over 5,000+ Satisfied Clients Nationwide",
-    "Guaranteed 100% Confidentiality & Data Security",
-    "Experienced, Certified Debt & Legal Experts – No Bots",
-    "Available In Multiple Regional Languages & Dialects",
-    "Flexible EMI & Customized Lump Sum Settlement Options",
-  ];
   return (
     <section
       id="why"
       style={{
-        maxWidth: 960,
-        margin: "90px auto 100px",
-        padding: "44px 26px",
+        maxWidth: 1200,
+        margin: "100px auto 120px",
+        padding: "60px 20px 70px 20px",
         fontFamily,
         userSelect: "text",
-        borderRadius: 22,
-        boxShadow: "0 10px 36px rgba(0, 112, 243, 0.18)",
-        backgroundColor: "#fff",
+        borderRadius: 32,
+        background: "linear-gradient(135deg, #e3f0ff 0%, #f3e5f5 100%)",
+        boxShadow: "0 16px 48px rgba(0, 112, 243, 0.13)",
         textAlign: "center",
         color: "#1e2e56",
+        position: "relative",
+        overflow: "hidden",
       }}
       aria-label="Why choose Penny & Debt for your debt relief needs"
     >
       <h2
         style={{
-          fontSize: 36,
+          fontSize: 40,
           fontWeight: "900",
           color: "#0070f3",
-          marginBottom: 36,
+          marginBottom: 18,
           userSelect: "none",
+          letterSpacing: 1.2,
         }}
       >
         Why Choose Penny & Debt?
       </h2>
-      <ul
+      <div style={{fontSize: 22, color: "#4a148c", fontWeight: 600, marginBottom: 38, letterSpacing: 0.5}}>
+        Your Trusted Partner for Debt Relief, Legal Protection & Financial Freedom
+      </div>
+      <div
         style={{
-          display: "flex",
-          flexWrap: "wrap",
-          gap: 22,
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(290px, 1fr))",
+          gap: 36,
           justifyContent: "center",
-          listStyle: "none",
-          padding: 0,
-          fontSize: 18,
-          color: "#1a2a4a",
-          userSelect: "text",
-          maxWidth: 840,
+          alignItems: "stretch",
+          maxWidth: 1100,
           margin: "0 auto",
         }}
       >
-        {points.map((point) => (
-          <li
-            key={point}
+        {whyChoosePoints.map(({ icon, text }, i) => (
+          <div
+            key={i}
             style={{
-              backgroundColor: "#d8e9ff",
-              padding: "14px 28px",
-              borderRadius: 32,
-              boxShadow: "0 8px 22px rgba(0,112,243,0.3)",
+              background: "#fff",
+              borderRadius: 24,
+              boxShadow: "0 8px 32px rgba(0, 112, 243, 0.10)",
+              padding: "38px 24px 32px 24px",
               display: "flex",
+              flexDirection: "column",
               alignItems: "center",
-              gap: 14,
-              minWidth: 280,
-              cursor: "default",
-              userSelect: "text",
+              justifyContent: "center",
+              minHeight: 220,
+              transition: "transform 0.25s cubic-bezier(.4,2,.6,1), box-shadow 0.25s cubic-bezier(.4,2,.6,1)",
+              cursor: "pointer",
+              position: "relative",
+              overflow: "hidden",
+            }}
+            onMouseEnter={e => {
+              e.currentTarget.style.transform = "translateY(-10px) scale(1.04)";
+              e.currentTarget.style.boxShadow = "0 18px 48px rgba(0, 112, 243, 0.18)";
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.transform = "none";
+              e.currentTarget.style.boxShadow = "0 8px 32px rgba(0, 112, 243, 0.10)";
             }}
           >
-            <svg
-              width="22"
-              height="22"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="#005bb5"
-              strokeWidth="3.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
-              focusable="false"
-            >
-              <polyline points="20 6 9 17 4 12" />
-            </svg>
-            <span>{point}</span>
-          </li>
+            <div style={{ marginBottom: 22 }}>{icon}</div>
+            <div style={{ fontSize: 20, fontWeight: 700, color: "#1a237e", marginBottom: 0, letterSpacing: 0.2, lineHeight: 1.4 }}>{text}</div>
+          </div>
         ))}
-      </ul>
+      </div>
     </section>
   );
 };
@@ -1138,20 +1198,24 @@ const DebtGuruChatbot = () => {
  * If you don't have an API key or prefer not to use GPT, chat gracefully falls back to polite error messages.
  */
 
-export default function App() {
-  return (
-    <div style={{ backgroundColor: "#f9fbff", color: "#2c3e50", minHeight: "100vh", position: "relative" }}>
-      {/* Main content */}
-      <main style={{ maxWidth: 1300, margin: "0 auto", padding: "0 24px" }}>
-        <Hero />
-        <About />
-        <Steps />
-        <Services />
-        <WhyChooseUs />
-        <Testimonials />
-      </main>
-      {/* GPT-4 powered Debt Guru Chatbot */}
-      <DebtGuruChatbot />
-    </div>
-  );
-}
+
+
+
+// Main Home page component
+const Home = () => (
+  <div style={{ backgroundColor: "#f9fbff", color: "#2c3e50", minHeight: "100vh", position: "relative" }}>
+    {/* Main content */}
+    <main style={{ maxWidth: 1300, margin: "0 auto", padding: "0 24px" }}>
+      <Hero />
+      <About />
+      <Steps />
+      <Services />
+      <WhyChooseUs />
+      <Testimonials />
+    </main>
+    {/* GPT-4 powered Debt Guru Chatbot */}
+    <DebtGuruChatbot />
+  </div>
+);
+
+export default Home;

@@ -19,22 +19,34 @@ const Careers = () => {
     setMessage("");
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.fullName.trim() || !formData.email.trim() || !formData.resume) {
       setMessage("Please fill all required fields and upload your resume.");
       return;
     }
-
-    // Example: You can replace this with your API call to submit the application
     setSubmitting(true);
-    setTimeout(() => {
-      alert("Application submitted successfully!");
+    try {
+      const data = new FormData();
+      data.append("fullName", formData.fullName);
+      data.append("email", formData.email);
+      data.append("resume", formData.resume);
+      const res = await fetch("/api/careers", {
+        method: "POST",
+        body: data,
+      });
+      if (!res.ok) {
+        const errMsg = (await res.json())?.message || "Failed to submit application";
+        throw new Error(errMsg);
+      }
       setFormData({ fullName: "", email: "", resume: null });
-      setMessage("");
-      setSubmitting(false);
+      setMessage("Application submitted successfully!");
       e.target.reset();
-    }, 1500);
+    } catch (err) {
+      setMessage(err.message || "Something went wrong. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (

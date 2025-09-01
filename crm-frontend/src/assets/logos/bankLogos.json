@@ -1,0 +1,27 @@
+[
+  { "type": "Bank", "name": "State Bank of India (SBI)", "logo": "https://sbi.co.in/favicon.ico" },
+  { "type": "Bank", "name": "ICICI Bank", "logo": "https://www.icicibank.com/favicon.ico" },
+  { "type": "Bank", "name": "Axis Bank", "logo": "https://www.axisbank.com/favicon.ico" },
+  { "type": "Bank", "name": "Canara Bank", "logo": "https://canarabank.com/favicon.ico" },
+  { "type": "Bank", "name": "Punjab National Bank (PNB)", "logo": "https://www.pnbindia.in/favicon.ico" },
+  { "type": "Bank", "name": "Union Bank of India", "logo": "https://www.unionbankofindia.co.in/favicon.ico" },
+  { "type": "Bank", "name": "IndusInd Bank", "logo": "https://www.indusind.com/favicon.ico" },
+  { "type": "Bank", "name": "YES BANK", "logo": "https://www.yesbank.in/favicon.ico" },
+
+  { "type": "NBFC", "name": "Aditya Birla Finance", "logo": "https://www.adityabirlacapital.com/favicon.ico" },
+  { "type": "NBFC", "name": "Aptus Value Housing Finance", "logo": "https://www.aptusindia.com/favicon.ico" },
+  { "type": "NBFC", "name": "Aavas Financiers", "logo": "https://www.aavas.in/favicon.ico" },
+  { "type": "NBFC", "name": "Cholamandalam Investment & Finance", "logo": "https://www.cholamandalam.com/favicon.ico" },
+  { "type": "NBFC", "name": "CreditAccess Grameen", "logo": "https://www.creditaccessgrameen.in/favicon.ico" },
+  { "type": "NBFC", "name": "Five-Star Business Finance", "logo": "https://fivestargroup.in/favicon.ico" },
+  { "type": "NBFC", "name": "HDB Financial Services", "logo": "https://www.hdbfs.com/favicon.ico" },
+  { "type": "NBFC", "name": "Hero FinCorp", "logo": "https://www.herofincorp.com/favicon.ico" },
+  { "type": "NBFC", "name": "Indiabulls Housing Finance", "logo": "https://www.indiabullshomeloans.com/favicon.ico" },
+  { "type": "NBFC", "name": "JM Financial", "logo": "https://www.jmfl.com/favicon.ico" },
+  { "type": "NBFC", "name": "Northern Arc Capital", "logo": "https://www.northernarc.com/favicon.ico" },
+  { "type": "NBFC", "name": "Piramal Capital & Housing Finance", "logo": "https://www.piramalfinance.com/favicon.ico" },
+  { "type": "NBFC", "name": "Poonawalla Fincorp", "logo": "https://poonawallafincorp.com/favicon.ico" },
+  { "type": "NBFC", "name": "Shriram Finance", "logo": "https://www.shriramfinance.in/favicon.ico" },
+  { "type": "NBFC", "name": "Sundaram Finance", "logo": "https://www.sundaramfinance.in/favicon.ico" },
+  { "type": "NBFC", "name": "Tata Capital Financial Services", "logo": "https://www.tatacapital.com/favicon.ico" }
+]
