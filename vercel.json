@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "name": "pennyanddebt",
+  "builds": [
+    {
+      "src": "crm-frontend/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "build"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "crm-frontend/$1"
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "https://api.pennyanddebt.in/api/$1"
+    }
+  ]
+}
